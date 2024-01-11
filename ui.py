@@ -6,46 +6,49 @@ class Bird(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(settings.bird_image_path)
         self.rect = self.image.get_rect()
+        self.rect.x = settings.bird_rect_x
+        self.rect.y = settings.bird_rect_y
 
+class Pig(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load(settings.pig_image_path)
+        self.rect = self.image.get_rect()
+        self.rect.x = settings.pig_rect_x
+        self.rect.y = settings.pig_rect_y
+
+    def explosion(self, object_2):
+        if self.rect.colliderect(object_2):
+            return False
+        else:
+            return True
 def bird_check_pos(bird, position):
+    x = bird.rect[0]
+    y = bird.rect[1]
     bird_width = bird.rect[2]
     bird_height = bird.rect[3]
-    return settings.bird_rect_x <= position[0] <= settings.bird_rect_x + bird_width and \
-            settings.bird_rect_y <= position[1] <= settings.bird_rect_y + bird_height
 
-def bird_pulling(mouse_pos):
-    bird = Bird()
-    left_border = settings.bird_rect_x - 100
-    right_border = settings.bird_rect_x + 20
-    bottom_border = settings.bird_rect_y + 20
-    top_border = settings.bird_rect_y - 100
+    return x <= position[0] <= x + bird_width and \
+            y <= position[1] <= y + bird_height
 
-    print("left_border", left_border)
-    print("right_border", right_border)
-    print("bottom_border", bottom_border)
-    print("top_border", top_border)
-    print("mouse_pos[0]", mouse_pos[0])
+def bird_pulling(mouse_pos, bird):
+    bird.rect.center = mouse_pos
+    basic_center_x = settings.bird_rect_x + (bird.rect[2] // 2)
+    basic_center_y = settings.bird_rect_y + (bird.rect[3] // 2)
 
-    if mouse_pos[0] < left_border:
-        bird.rect.center = (left_border, mouse_pos[1])
+    left_border = basic_center_x - 100
+    right_border = basic_center_x + 100
+    bottom_border = basic_center_y + 100
+    top_border = basic_center_y - 100
+
+    """if mouse_pos[0] < left_border:
+        mouse_pos = (left_border, mouse_pos[1])
     if mouse_pos[0] > right_border:
-        bird.rect.centerx = right_border
+        mouse_pos = (right_border, mouse_pos[1])
     if mouse_pos[1] > bottom_border:
-        bird.rect.centery = bottom_border
+        mouse_pos = (mouse_pos[0], bottom_border)
     if mouse_pos[1] < top_border:
-        bird.rect.centery = top_border
+        mouse_pos = (mouse_pos[0], top_border)"""
+    bird.rect.center = mouse_pos
+    return mouse_pos
 
-
-def level_1(screen):
-    slingshot = pygame.image.load(settings.slingshot_image_path)
-    screen.blit(slingshot, (settings.slingshot_rect_x, settings.slingshot_rect_y))
-
-    for i in 0, 105:
-        column_vertical = pygame.image.load(settings.column_vertical_image_path)
-        screen.blit(column_vertical, (settings.column_vertical_rect_x + i, settings.column_vertical_rect_y))
-
-    column_horizontal = pygame.image.load(settings.column_horizontal_image_path)
-    screen.blit(column_horizontal, (settings.column_horizontal_rect_x, settings.column_horizontal_rect_y))
-
-    pig = pygame.image.load(settings.pig_image_path)
-    screen.blit(pig, (settings.pig_rect_x, settings.pig_rect_y))

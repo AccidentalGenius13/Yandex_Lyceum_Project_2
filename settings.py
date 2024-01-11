@@ -21,3 +21,7 @@ column_horizontal_rect_y = 645
 pig_image_path = "images/pig.png"
 pig_rect_x = 1140
 pig_rect_y = 600
+
+boom_image_path = "images/boom.png"
+boom_rect_x = pig_rect_x - 20
+boom_rect_y = pig_rect_y - 20

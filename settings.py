@@ -6,6 +6,8 @@ bird_rect_y = 688
 
 bg = "images/background.jpeg"
 
+start_bg = "images/start_window.png"
+
 slingshot_image_path = "images/slingshot.png"
 slingshot_rect_x = 125
 slingshot_rect_y = 540
@@ -25,3 +27,22 @@ pig_rect_y = 600
 boom_image_path = "images/boom.png"
 boom_rect_x = pig_rect_x - 20
 boom_rect_y = pig_rect_y - 20
+
+start_button_image_path = "images/start.png"
+start_button_rect_x = 700
+start_button_rect_y = 320
+
+logout_button_image_path = "images/logout_button.png"
+logout_button_rect_x = 700
+logout_button_rect_y = 520
+
+block_level_image_path = "images/block_level.jpg"
+
+levels_base_x = 50
+levels_y = 50
+
+levels_space = 30
+
+image_width = 92
+
+levels_acessibility = [1, 0]

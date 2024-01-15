@@ -8,6 +8,8 @@ bg = "images/background.jpeg"
 
 start_bg = "images/start_window.png"
 
+choose_level_bg = "images/choose_level.jpg"
+
 slingshot_image_path = "images/slingshot.png"
 slingshot_rect_x = 125
 slingshot_rect_y = 540
@@ -30,11 +32,11 @@ boom_rect_y = pig_rect_y - 20
 
 start_button_image_path = "images/start.png"
 start_button_rect_x = 700
-start_button_rect_y = 320
+start_button_rect_y = 220
 
 logout_button_image_path = "images/logout_button.png"
-logout_button_rect_x = 700
-logout_button_rect_y = 520
+logout_button_rect_x = 760
+logout_button_rect_y = 420
 
 block_level_image_path = "images/block_level.jpg"
 
@@ -45,4 +47,4 @@ levels_space = 30
 
 image_width = 92
 
-levels_acessibility = [1, 0]
+levels_acessibility = [1, 0, 0, 0, 0]

@@ -7,19 +7,10 @@ import Yandex_Lyceum
 
 if __name__ == '__main__':
     pygame.init()
-    Yandex_Lyceum.start_window()
     screen = pygame.display.set_mode(size=settings.size)
     bird = ui.Bird()
     pig = ui.Pig()
     boom = ui.Boom()
-
-    background = pygame.image.load(settings.bg)
-    screen.blit(background, (0, 0))
-
-    screen.blit(bird.image, (settings.bird_rect_x, settings.bird_rect_y))
-    screen.blit(pig.image, (settings.pig_rect_x, settings.pig_rect_y))
-
-    Yandex_Lyceum.level_1(screen)
 
     boom_time = 10000000
 
@@ -32,18 +23,35 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if current_screen == 'Start page':
                 start_button = ui.StartButton()
+                logout_button = ui.LogoutButton()
                 background = pygame.image.load(settings.start_bg)
                 button = pygame.image.load(settings.start_button_image_path)
-                ui.draw_start_page(screen, background, button)
+                logout = pygame.image.load(settings.logout_button_image_path)
+                ui.draw_start_page(screen, background, button, logout)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if start_button.check_start_button_pressed(event.pos):
                         current_screen = 'choose level'
                         print(current_screen)
+                    if logout_button.check_logout_button_pressed(event.pos):
+                        running = False
 
             if current_screen == 'choose level':
-                background = pygame.image.load(settings.start_bg)
-                levels_objects = [ui.level_button(i) for i in range(1, 3)]
+                level_button = ui.LevelButton
+                background = pygame.image.load(settings.choose_level_bg)
+                levels_objects = [level_button(i) for i in range(1, 6)]
                 ui.draw_levels_chooise(screen, background, levels_objects)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    level_pressed = [levels_objects[i].check_level_button_pressed(event.pos) for i in range(5)]
+                    if True in level_pressed:
+                        level_number = level_pressed.index(True)
+                        if settings.levels_acessibility[level_number] == 1:
+                            current_screen = f'level {level_number + 1}'
+
+            if current_screen == 'level 1':
+                background = pygame.image.load(settings.bg)
+                screen.blit(background, (0, 0))
+                screen.blit(bird.image, (settings.bird_rect_x, settings.bird_rect_y))
+                Yandex_Lyceum.level_1(screen)
 
             if event.type == pygame.QUIT:
                 running = False

@@ -8,18 +8,17 @@ import Yandex_Lyceum
 if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode(size=settings.size)
+    background = pygame.image.load(settings.start_bg)
     bird = ui.Bird()
     pig = ui.Pig()
-    boom = ui.Boom()
 
-    boom_time = 10000000
-
+    mouse_pressed = False
+    level_number = None
     existence = True
     moving = False
     running = True
     current_screen = 'Start page'
     while running:
-        now = pygame.time.get_ticks()
         for event in pygame.event.get():
             if current_screen == 'Start page':
                 start_button = ui.StartButton()
@@ -31,7 +30,6 @@ if __name__ == '__main__':
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if start_button.check_start_button_pressed(event.pos):
                         current_screen = 'choose level'
-                        print(current_screen)
                     if logout_button.check_logout_button_pressed(event.pos):
                         running = False
 
@@ -45,37 +43,77 @@ if __name__ == '__main__':
                     if True in level_pressed:
                         level_number = level_pressed.index(True)
                         if settings.levels_acessibility[level_number] == 1:
-                            current_screen = f'level {level_number + 1}'
-
-            if current_screen == 'level 1':
-                background = pygame.image.load(settings.bg)
-                screen.blit(background, (0, 0))
-                screen.blit(bird.image, (settings.bird_rect_x, settings.bird_rect_y))
-                Yandex_Lyceum.level_1(screen)
+                            current_screen = 'game'
 
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if ui.bird_check_pos(bird, event.pos):
-                    moving = True
-            if event.type == pygame.MOUSEBUTTONUP:
-                moving = False
-            if event.type == pygame.MOUSEMOTION and moving:
-                bird.rect.center = ui.bird_pulling(event.pos, bird)
+
+
+
+            if current_screen == 'game':
+                background = pygame.image.load(settings.bg)
                 screen.blit(background, (0, 0))
-                screen.blit(bird.image, bird.rect)
-                explosion_result = pig.explosion(bird)
-                if explosion_result[0] and existence:
-                    screen.blit(pig.image, (settings.pig_rect_x, settings.pig_rect_y))
-                else:
-                    existence = False
-                    screen.blit(boom.image, (settings.boom_rect_x, settings.boom_rect_y))
-                    boom_time = explosion_result[1]
-                Yandex_Lyceum.level_1(screen)
-            if now - boom_time > 3000:
-                screen.blit(background, (0, 0))
-                screen.blit(bird.image, bird.rect)
-                Yandex_Lyceum.level_1(screen)
+                screen.blit(bird.image, (bird.rect.x, bird.rect.y))
+
+                if level_number + 1 == 1:
+                    current_level_ui = Yandex_Lyceum.level_1
+                if level_number + 1 == 2:
+                    current_level_ui = Yandex_Lyceum.level_2
+                if level_number + 1 == 3:
+                    current_level_ui = Yandex_Lyceum.level_3
+                if level_number + 1 == 4:
+                    current_level_ui = Yandex_Lyceum.level_4
+                if level_number + 1 == 5:
+                    current_level_ui = Yandex_Lyceum.level_5
+
+                current_level_ui(screen, existence)
+
+                """pause_button = ui.PauseButton()
+                button = pygame.image.load(settings.pause_button)
+                ui.draw_pause_screen(screen, background, button)
+
+                current_level_ui(screen, existence)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if pause_button.check_pause_button_pressed(event.pos):
+                        current_screen = 'pause'"""
+
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if ui.bird_check_pos(bird, event.pos):
+                        moving = True
+                        mouse_pressed = True
+
+                if event.type == pygame.MOUSEBUTTONUP:
+                    moving = False
+                    if mouse_pressed:
+                        #bird.flyght(event.pos, screen)
+                        mouse_pressed = False
+                if event.type == pygame.MOUSEMOTION and moving:
+                    bird.rect.center = ui.bird_pulling(event.pos, bird)
+                    screen.blit(background, (0, 0))
+                    screen.blit(bird.image, bird.rect)
+                    explosion_result = pig.explosion(bird)
+                    if explosion_result and existence:
+                        current_level_ui(screen)
+                    else:
+                        current_level_ui(screen, False)
+                        existence = False
+                        current_screen = "menu"
+
+            if current_screen == 'menu':
+                next_level_button = ui.NextLevel()
+                logout_button = ui.LogoutButton()
+                background = pygame.image.load(settings.choose_level_bg)
+                button = pygame.image.load(settings.next_level_button)
+                logout = pygame.image.load(settings.logout_button_image_path)
+                ui.draw_menu_page(screen, background, button, logout)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if logout_button.check_logout_button_pressed(event.pos):
+                        running = False
+                    if next_level_button.check_next_level_button_pressed(event.pos):
+                        current_screen = 'level'
+
 
         pygame.display.flip()
     pygame.quit()

@@ -1,8 +1,8 @@
 size = width, height = 1500, 843
 
 bird_image_path = "images/bird.png"
-bird_rect_x = 110
-bird_rect_y = 688
+bird_rect_x = 150
+bird_rect_y = 550
 
 bg = "images/background.jpeg"
 
@@ -26,16 +26,12 @@ pig_image_path = "images/pig.png"
 pig_rect_x = 1140
 pig_rect_y = 600
 
-boom_image_path = "images/boom.png"
-boom_rect_x = pig_rect_x - 20
-boom_rect_y = pig_rect_y - 20
-
 start_button_image_path = "images/start.png"
-start_button_rect_x = 700
+start_button_rect_x = 640
 start_button_rect_y = 220
 
 logout_button_image_path = "images/logout_button.png"
-logout_button_rect_x = 760
+logout_button_rect_x = 700
 logout_button_rect_y = 420
 
 block_level_image_path = "images/block_level.jpg"
@@ -48,3 +44,11 @@ levels_space = 30
 image_width = 92
 
 levels_acessibility = [1, 0, 0, 0, 0]
+
+pause_button = "images/pause_button.png"
+pause_button_rect_x = 40
+pause_button_rect_y = 40
+
+next_level_button = "images/next_level.png"
+next_level_button_rect_x = 700
+next_level_button_rect_y = 200

@@ -13,7 +13,7 @@ if __name__ == '__main__':
     pig = ui.Pig()
 
 
-
+    flyght = False
     mouse_pressed = False
     level_number = None
     existence = True
@@ -94,20 +94,16 @@ if __name__ == '__main__':
                     if mouse_pressed:
                         #bird.flight(event.pos, screen)
                         mouse_pressed = False
-                        for _ in range(500):
-                            bird.rect.x += 0.5
-                            bird.rect.y += 0.2
-                            screen.blit(background, (0, 0))
-                            screen.blit(bird.image, bird.rect)
-                            current_level_ui(screen)
-                            pygame.display.flip()
-                        for _ in range(500):
-                            bird.rect.x += 0.5
-                            bird.rect.y -= 0.2
-                            screen.blit(background, (0, 0))
-                            screen.blit(bird.image, bird.rect)
-                            current_level_ui(screen)
-                            pygame.display.flip()
+                        flyght = True
+                if event.type == pygame.KEYUP and flyght:
+                    bird.rect.y -= 0.5
+                    for _ in range(300):
+                        bird.rect.x += 0.5
+                        screen.blit(background, (0, 0))
+                        screen.blit(bird.image, bird.rect)
+                        current_level_ui(screen)
+                        pygame.display.flip()
+
 
                 if event.type == pygame.MOUSEMOTION and moving:
                     bird.rect.center = ui.bird_pulling(event.pos, bird)
@@ -148,8 +144,10 @@ if __name__ == '__main__':
                        print('play')
                        current_screen = helper.ScreenNames.game
             if moving:
-                pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 20, bird.rect.y],
-                                 [settings.slingshot_rect_x + 20, settings.slingshot_rect_y], 3)
+                pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 10, bird.rect.y + 26],
+                                 [settings.slingshot_rect_x + 20, settings.slingshot_rect_y + 28], 3)
+                pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 30, bird.rect.y + 26],
+                                 [settings.slingshot_rect_x + 30, settings.slingshot_rect_y + 28], 3)
 
         pygame.display.flip()
     pygame.quit()

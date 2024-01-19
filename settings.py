@@ -52,3 +52,8 @@ pause_button_rect_y = 40
 next_level_button = "images/next_level.png"
 next_level_button_rect_x = 700
 next_level_button_rect_y = 200
+
+
+continue_button = 'images/play_button.jpg'
+continue_button_rect_x = 300
+continue_button_rect_y = 40

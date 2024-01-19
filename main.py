@@ -2,8 +2,9 @@ import pygame
 import settings
 import ui
 import Yandex_Lyceum
-
-
+import helper
+import sqlite3
+import database
 
 if __name__ == '__main__':
     pygame.init()
@@ -11,6 +12,10 @@ if __name__ == '__main__':
     background = pygame.image.load(settings.start_bg)
     bird = ui.Bird()
     pig = ui.Pig()
+
+    connection = sqlite3.connect('my_database.db')
+    cursor = connection.cursor()
+    # database.create_table(cursor)
 
     mouse_pressed = False
     level_number = None
@@ -20,6 +25,11 @@ if __name__ == '__main__':
     current_screen = 'Start page'
     while running:
         for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                running = False
+                connection.close()
+
             if current_screen == 'Start page':
                 start_button = ui.StartButton()
                 logout_button = ui.LogoutButton()
@@ -43,14 +53,14 @@ if __name__ == '__main__':
                     if True in level_pressed:
                         level_number = level_pressed.index(True)
                         if settings.levels_acessibility[level_number] == 1:
-                            current_screen = 'game'
+                            current_screen = helper.ScreenNames.game
+                            bird.rect.x = settings.bird_rect_x
+                            bird.rect.y = settings.bird_rect_y
+                            mouse_pressed = False
+                            existence = True
+                            level_start_time = pygame.time.get_ticks()
 
-            if event.type == pygame.QUIT:
-                running = False
-
-
-
-            if current_screen == 'game':
+            if current_screen == helper.ScreenNames.game:
                 background = pygame.image.load(settings.bg)
                 screen.blit(background, (0, 0))
                 screen.blit(bird.image, (bird.rect.x, bird.rect.y))
@@ -59,6 +69,7 @@ if __name__ == '__main__':
                     current_level_ui = Yandex_Lyceum.level_1
                 if level_number + 1 == 2:
                     current_level_ui = Yandex_Lyceum.level_2
+                    print(mouse_pressed)
                 if level_number + 1 == 3:
                     current_level_ui = Yandex_Lyceum.level_3
                 if level_number + 1 == 4:
@@ -66,20 +77,16 @@ if __name__ == '__main__':
                 if level_number + 1 == 5:
                     current_level_ui = Yandex_Lyceum.level_5
 
-                current_level_ui(screen, existence)
+                # current_level_ui(screen, existence)
 
-                """pause_button = ui.PauseButton()
-                button = pygame.image.load(settings.pause_button)
-                ui.draw_pause_screen(screen, background, button)
+                pause_button = ui.PauseButton()
 
                 current_level_ui(screen, existence)
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pause_button.check_pause_button_pressed(event.pos):
-                        current_screen = 'pause'"""
+                       current_screen = helper.ScreenNames.pause
 
-
-                if event.type == pygame.MOUSEBUTTONDOWN:
                     if ui.bird_check_pos(bird, event.pos):
                         moving = True
                         mouse_pressed = True
@@ -87,8 +94,9 @@ if __name__ == '__main__':
                 if event.type == pygame.MOUSEBUTTONUP:
                     moving = False
                     if mouse_pressed:
-                        #bird.flyght(event.pos, screen)
+                        bird.flight(event.pos, screen)
                         mouse_pressed = False
+
                 if event.type == pygame.MOUSEMOTION and moving:
                     bird.rect.center = ui.bird_pulling(event.pos, bird)
                     screen.blit(background, (0, 0))
@@ -98,21 +106,36 @@ if __name__ == '__main__':
                         current_level_ui(screen)
                     else:
                         current_level_ui(screen, False)
+                        level_finish_time = pygame.time.get_ticks()
+                        time_for_level = level_finish_time - level_start_time
+                        helper.write_level_results_to_txt(level_number, time_for_level)
                         existence = False
                         current_screen = "menu"
 
             if current_screen == 'menu':
                 next_level_button = ui.NextLevel()
-                logout_button = ui.LogoutButton()
+                logout_button = ui.LogoutButton(
+                    x=settings.logout_button_rect_x + 650,
+                    y=settings.logout_button_rect_y + 300
+                )
                 background = pygame.image.load(settings.choose_level_bg)
-                button = pygame.image.load(settings.next_level_button)
-                logout = pygame.image.load(settings.logout_button_image_path)
-                ui.draw_menu_page(screen, background, button, logout)
+                ui.draw_menu_page(screen, background, next_level_button.image, logout_button.image, time_for_level)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if logout_button.check_logout_button_pressed(event.pos):
                         running = False
                     if next_level_button.check_next_level_button_pressed(event.pos):
-                        current_screen = 'level'
+                        current_screen = helper.ScreenNames.choose_level
+                        print(level_number)
+                        settings.levels_acessibility[level_number + 1] = 1
+
+            if current_screen == 'pause':
+                continue_button = ui.ContinueButton()
+                ui.draw_pause_screen(screen, background, continue_button.image)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                   if continue_button.check_button_pressed(event.pos):
+                       print('play')
+                       current_screen = helper.ScreenNames.game
 
 
         pygame.display.flip()

@@ -1,7 +1,7 @@
 import pygame
 import settings
 import ui
-import Yandex_Lyceum
+import levels
 import helper
 
 
@@ -63,16 +63,16 @@ if __name__ == '__main__':
                 screen.blit(bird.image, (bird.rect.x, bird.rect.y))
 
                 if level_number + 1 == 1:
-                    current_level_ui = Yandex_Lyceum.level_1
+                    current_level_ui = levels.level_1
                 if level_number + 1 == 2:
-                    current_level_ui = Yandex_Lyceum.level_2
+                    current_level_ui = levels.level_2
                 if level_number + 1 == 3:
-                    current_level_ui = Yandex_Lyceum.level_3
+                    current_level_ui = levels.level_3
                     pig = ui.Pig(x=settings.pig_rect_x, y=settings.pig_rect_y - 200)
                 if level_number + 1 == 4:
-                    current_level_ui = Yandex_Lyceum.level_4
+                    current_level_ui = levels.level_4
                 if level_number + 1 == 5:
-                    current_level_ui = Yandex_Lyceum.level_5
+                    current_level_ui = levels.level_5
 
                 # current_level_ui(screen, existence)
 
@@ -95,14 +95,12 @@ if __name__ == '__main__':
                         #bird.flight(event.pos, screen)
                         mouse_pressed = False
                         flyght = True
-                if event.type == pygame.KEYUP and flyght:
-                    bird.rect.y -= 0.5
-                    for _ in range(300):
-                        bird.rect.x += 0.5
-                        screen.blit(background, (0, 0))
-                        screen.blit(bird.image, bird.rect)
-                        current_level_ui(screen)
-                        pygame.display.flip()
+                        for _ in range(3000):
+                            bird.rect.x += 0.5
+                            screen.blit(background, (0, 0))
+                            screen.blit(bird.image, bird.rect)
+                            current_level_ui(screen)
+                            pygame.display.flip()
 
 
                 if event.type == pygame.MOUSEMOTION and moving:
@@ -146,8 +144,8 @@ if __name__ == '__main__':
             if moving:
                 pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 10, bird.rect.y + 26],
                                  [settings.slingshot_rect_x + 20, settings.slingshot_rect_y + 28], 3)
-                pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 30, bird.rect.y + 26],
-                                 [settings.slingshot_rect_x + 30, settings.slingshot_rect_y + 28], 3)
+                pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 48, bird.rect.y + 26],
+                                 [settings.slingshot_rect_x + 55, settings.slingshot_rect_y + 32], 3)
 
         pygame.display.flip()
     pygame.quit()

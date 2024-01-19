@@ -1,8 +1,7 @@
-import math
 import pygame
 import helper
 
-import Yandex_Lyceum
+import levels
 import settings
 
 
@@ -30,7 +29,7 @@ class Bird(pygame.sprite.Sprite):
             self.rect.x = new_x
             self.rect.y = new_y
             t += 0.5
-            Yandex_Lyceum.level_1(screen)
+            levels.level_1(screen)
             screen.blit(self.image, self.rect)
 
 

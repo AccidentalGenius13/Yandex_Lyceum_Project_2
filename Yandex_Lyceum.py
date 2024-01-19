@@ -18,7 +18,7 @@ def level_1(screen, draw_pig=True):
     screen.blit(pause_button.image, (settings.pause_button_rect_x, settings.pause_button_rect_y))
 
     if draw_pig:
-        screen.blit(pig.image, (settings.pig_rect_x, settings.pig_rect_y - 200))
+        screen.blit(pig.image, (settings.pig_rect_x, settings.pig_rect_y))
 
 
 def level_2(screen, draw_pig=True):

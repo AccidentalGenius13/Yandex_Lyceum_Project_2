@@ -66,9 +66,9 @@ if __name__ == '__main__':
                     current_level_ui = Yandex_Lyceum.level_1
                 if level_number + 1 == 2:
                     current_level_ui = Yandex_Lyceum.level_2
-                    print(mouse_pressed)
                 if level_number + 1 == 3:
                     current_level_ui = Yandex_Lyceum.level_3
+                    pig = ui.Pig(x=settings.pig_rect_x, y=settings.pig_rect_y - 200)
                 if level_number + 1 == 4:
                     current_level_ui = Yandex_Lyceum.level_4
                 if level_number + 1 == 5:
@@ -77,8 +77,7 @@ if __name__ == '__main__':
                 # current_level_ui(screen, existence)
 
                 pause_button = ui.PauseButton()
-                pygame.draw.line(screen, (0, 0, 0), [bird.rect.x, bird.rect.y],
-                                 [settings.slingshot_rect_x, settings.slingshot_rect_y], 3)
+
 
                 current_level_ui(screen, existence)
 
@@ -93,8 +92,22 @@ if __name__ == '__main__':
                 if event.type == pygame.MOUSEBUTTONUP:
                     moving = False
                     if mouse_pressed:
-                        bird.flight(event.pos, screen)
+                        #bird.flight(event.pos, screen)
                         mouse_pressed = False
+                        for _ in range(500):
+                            bird.rect.x += 0.5
+                            bird.rect.y += 0.2
+                            screen.blit(background, (0, 0))
+                            screen.blit(bird.image, bird.rect)
+                            current_level_ui(screen)
+                            pygame.display.flip()
+                        for _ in range(500):
+                            bird.rect.x += 0.5
+                            bird.rect.y -= 0.2
+                            screen.blit(background, (0, 0))
+                            screen.blit(bird.image, bird.rect)
+                            current_level_ui(screen)
+                            pygame.display.flip()
 
                 if event.type == pygame.MOUSEMOTION and moving:
                     bird.rect.center = ui.bird_pulling(event.pos, bird)
@@ -134,7 +147,9 @@ if __name__ == '__main__':
                    if continue_button.check_button_pressed(event.pos):
                        print('play')
                        current_screen = helper.ScreenNames.game
-
+            if moving:
+                pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 20, bird.rect.y],
+                                 [settings.slingshot_rect_x + 20, settings.slingshot_rect_y], 3)
 
         pygame.display.flip()
     pygame.quit()

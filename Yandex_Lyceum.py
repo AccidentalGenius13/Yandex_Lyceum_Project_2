@@ -20,6 +20,7 @@ def level_1(screen, draw_pig=True):
     if draw_pig:
         screen.blit(pig.image, (settings.pig_rect_x, settings.pig_rect_y - 200))
 
+
 def level_2(screen, draw_pig=True):
     pig = ui.Pig()
     slingshot = pygame.image.load(settings.slingshot_image_path)

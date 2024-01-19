@@ -77,6 +77,8 @@ if __name__ == '__main__':
                 # current_level_ui(screen, existence)
 
                 pause_button = ui.PauseButton()
+                pygame.draw.line(screen, (0, 0, 0), [bird.rect.x, bird.rect.y],
+                                 [settings.slingshot_rect_x, settings.slingshot_rect_y], 3)
 
                 current_level_ui(screen, existence)
 

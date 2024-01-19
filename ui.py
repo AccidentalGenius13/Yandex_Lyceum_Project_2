@@ -35,12 +35,12 @@ class Bird(pygame.sprite.Sprite):
 
 
 class Pig(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x=settings.logout_button_rect_x, y=settings.logout_button_rect_y):
         super().__init__()
         self.image = pygame.image.load(settings.pig_image_path)
         self.rect = self.image.get_rect()
-        self.rect.x = settings.pig_rect_x
-        self.rect.y = settings.pig_rect_y
+        self.rect.x = x
+        self.rect.y = y
         self.was_explosion = False
 
     def explosion(self, object_2):

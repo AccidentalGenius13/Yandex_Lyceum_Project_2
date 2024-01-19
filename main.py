@@ -3,8 +3,7 @@ import settings
 import ui
 import Yandex_Lyceum
 import helper
-import sqlite3
-import database
+
 
 if __name__ == '__main__':
     pygame.init()
@@ -13,9 +12,7 @@ if __name__ == '__main__':
     bird = ui.Bird()
     pig = ui.Pig()
 
-    connection = sqlite3.connect('my_database.db')
-    cursor = connection.cursor()
-    # database.create_table(cursor)
+
 
     mouse_pressed = False
     level_number = None
@@ -28,7 +25,7 @@ if __name__ == '__main__':
 
             if event.type == pygame.QUIT:
                 running = False
-                connection.close()
+
 
             if current_screen == 'Start page':
                 start_button = ui.StartButton()
@@ -101,16 +98,15 @@ if __name__ == '__main__':
                     bird.rect.center = ui.bird_pulling(event.pos, bird)
                     screen.blit(background, (0, 0))
                     screen.blit(bird.image, bird.rect)
-                    explosion_result = pig.explosion(bird)
-                    if explosion_result and existence:
-                        current_level_ui(screen)
-                    else:
-                        current_level_ui(screen, False)
-                        level_finish_time = pygame.time.get_ticks()
-                        time_for_level = level_finish_time - level_start_time
-                        helper.write_level_results_to_txt(level_number, time_for_level)
-                        existence = False
-                        current_screen = "menu"
+                explosion_result = pig.explosion(bird)
+                if explosion_result and existence:
+                    current_level_ui(screen)
+                else:
+                    current_level_ui(screen, False)
+                    level_finish_time = pygame.time.get_ticks()
+                    time_for_level = level_finish_time - level_start_time
+                    existence = False
+                    current_screen = "menu"
 
             if current_screen == 'menu':
                 next_level_button = ui.NextLevel()

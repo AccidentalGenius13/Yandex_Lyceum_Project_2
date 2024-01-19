@@ -16,15 +16,12 @@ class Bird(pygame.sprite.Sprite):
         self.rect.y = settings.bird_rect_y
 
     def flight(self, position, screen):
-        # x_distance = abs(settings.bird_rect_x - position[0])
-        # y_distance = abs(settings.bird_rect_y - position[1])
-        # distance = (x_distance ** 2 + y_distance ** 2) ** 0.5
         distance = helper.get_distance(position, (self.rect.x, self.rect.y))
         cos_alpha = helper.get_angle_trigonometry(position, (self.rect.x, self.rect.y))['cos']
         sin_alpha = helper.get_angle_trigonometry(position, (self.rect.x, self.rect.y))['sin']
         print(cos_alpha, sin_alpha)
         t = 0
-        v = distance * 5
+        v = 9
 
         while t < 100:
             new_x = settings.bird_rect_x + v * cos_alpha * t
@@ -84,8 +81,8 @@ def bird_pulling(mouse_pos, bird):
     if mouse_pos[1] > bottom_border:
         mouse_pos = (mouse_pos[0], bottom_border)
     if mouse_pos[1] < top_border:
-        mouse_pos = (mouse_pos[0], top_border)
-    bird.rect.center = mouse_pos"""
+        mouse_pos = (mouse_pos[0], top_border)"""
+    bird.rect.center = mouse_pos
     return mouse_pos
 
 
@@ -223,4 +220,4 @@ def draw_menu_page(screen, background, button, logout_btn, points):
     screen.blit(background, (0, 0))
     screen.blit(button, (settings.next_level_button_rect_x, settings.next_level_button_rect_y))
     screen.blit(logout_btn, (settings.logout_button_rect_x + 650, settings.logout_button_rect_y + 300))
-    helper.print_points(points, screen)
+    helper.print_points(round(1 / points * 1000000), screen)

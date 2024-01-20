@@ -6,6 +6,7 @@ class ScreenNames:
     pause = "pause"
     game = "game"
     gameover = "gameover"
+    victory = "victory"
 
 
 def get_distance(first, second):

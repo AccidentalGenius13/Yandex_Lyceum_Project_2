@@ -64,3 +64,7 @@ go_to_menu_button_rect_y = 200
 start_over_button = "images/start_over.png"
 start_over_button_rect_x = 720
 start_over_button_rect_y = 40
+
+victory = "images/victory.png"
+victory_rect_x = 620
+victory_rect_y = 40

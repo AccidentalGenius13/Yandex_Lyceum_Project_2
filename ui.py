@@ -268,3 +268,8 @@ def draw_gameover_page(screen, background, start_over, go_to_menu):
     screen.blit(background, (0, 0))
     screen.blit(start_over, (settings.start_over_button_rect_x, settings.start_over_button_rect_y))
     screen.blit(go_to_menu, (settings.go_to_menu_button_rect_x + 400, settings.go_to_menu_button_rect_y))
+
+def draw_victory_page(screen, background, logout_button, victory):
+    screen.blit(background, (0, 0))
+    screen.blit(logout_button, (settings.logout_button_rect_x + 650, settings.logout_button_rect_y + 300))
+    screen.blit(victory, (settings.victory_rect_x, settings.victory_rect_y))

@@ -12,7 +12,7 @@ if __name__ == '__main__':
     bird = ui.Bird()
     pig = ui.Pig()
 
-
+    ground = False
     flyght = False
     mouse_pressed = False
     level_number = None
@@ -74,10 +74,7 @@ if __name__ == '__main__':
                 if level_number + 1 == 5:
                     current_level_ui = levels.level_5
 
-                # current_level_ui(screen, existence)
-
                 pause_button = ui.PauseButton()
-
 
                 current_level_ui(screen, existence)
 
@@ -108,6 +105,7 @@ if __name__ == '__main__':
                                 break
                             bird.rect.x += 0.5
                             bird.rect.y = k * bird.rect.x + b
+
                             screen.blit(background, (0, 0))
                             screen.blit(bird.image, bird.rect)
                             current_level_ui(screen)

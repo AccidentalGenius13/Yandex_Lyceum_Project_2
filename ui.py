@@ -65,6 +65,21 @@ def bird_pulling(mouse_pos, bird):
     bird.rect.center = mouse_pos
     return mouse_pos
 
+class ColumnVertical(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load(settings.column_vertical_image_path)
+        self.rect = self.image.get_rect()
+        self.rect.x = settings.column_vertical_rect_x
+        self.rect.y = settings.column_vertical_rect_y
+
+class ColumnHorizontal(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load(settings.column_horizontal_image_path)
+        self.rect = self.image.get_rect()
+        self.rect.x = settings.column_horizontal_rect_x
+        self.rect.y = settings.column_horizontal_rect_y
 
 class StartButton(pygame.sprite.Sprite):
     def __init__(self):

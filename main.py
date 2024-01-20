@@ -94,6 +94,7 @@ if __name__ == '__main__':
                     if mouse_pressed:
                         mouse_pressed = False
                         flyght = True
+                        k, b = helper.get_line_formula((bird.rect.x, bird.rect.y), (settings.bird_rect_x, settings.bird_rect_y))
                         for _ in range(3000):
                             explosion_result = pig.explosion(bird)
                             if explosion_result and existence:
@@ -106,6 +107,7 @@ if __name__ == '__main__':
                                 current_screen = "menu"
                                 break
                             bird.rect.x += 0.5
+                            bird.rect.y = k * bird.rect.x + b
                             screen.blit(background, (0, 0))
                             screen.blit(bird.image, bird.rect)
                             current_level_ui(screen)
@@ -151,7 +153,7 @@ if __name__ == '__main__':
                    if continue_button.check_button_pressed(event.pos):
                        current_screen = helper.ScreenNames.game
                    if go_to_menu.check_button_pressed(event.pos):
-                       current_screen = "menu"
+                       current_screen = "choose level"
             if moving:
                 pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 10, bird.rect.y + 26],
                                  [settings.slingshot_rect_x + 20, settings.slingshot_rect_y + 28], 3)

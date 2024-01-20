@@ -14,25 +14,6 @@ class Bird(pygame.sprite.Sprite):
         self.rect.x = settings.bird_rect_x
         self.rect.y = settings.bird_rect_y
 
-    def flight(self, position, screen):
-        distance = helper.get_distance(position, (self.rect.x, self.rect.y))
-        cos_alpha = helper.get_angle_trigonometry(position, (self.rect.x, self.rect.y))['cos']
-        sin_alpha = helper.get_angle_trigonometry(position, (self.rect.x, self.rect.y))['sin']
-        print(cos_alpha, sin_alpha)
-        t = 0
-        v = 9
-
-        while t < 100:
-            new_x = settings.bird_rect_x + v * cos_alpha * t
-            new_y = settings.bird_rect_y - v * sin_alpha * t + (9.8 * t**2)/2
-            print(new_x, new_y)
-            self.rect.x = new_x
-            self.rect.y = new_y
-            t += 0.5
-            levels.level_1(screen)
-            screen.blit(self.image, self.rect)
-
-
 class Pig(pygame.sprite.Sprite):
     def __init__(self, x=settings.pig_rect_x, y=settings.pig_rect_y):
         super().__init__()
@@ -69,18 +50,18 @@ def bird_pulling(mouse_pos, bird):
     basic_center_y = settings.bird_rect_y + (bird.rect[3] // 2)
 
     left_border = basic_center_x - 100
-    right_border = basic_center_x + 100
+    right_border = basic_center_x + 10
     bottom_border = basic_center_y + 100
-    top_border = basic_center_y - 30
+    top_border = basic_center_y - 300
 
-    """if mouse_pos[0] < left_border:
+    if mouse_pos[0] < left_border:
         mouse_pos = (left_border, mouse_pos[1])
     if mouse_pos[0] > right_border:
         mouse_pos = (right_border, mouse_pos[1])
     if mouse_pos[1] > bottom_border:
         mouse_pos = (mouse_pos[0], bottom_border)
     if mouse_pos[1] < top_border:
-        mouse_pos = (mouse_pos[0], top_border)"""
+        mouse_pos = (mouse_pos[0], top_border)
     bird.rect.center = mouse_pos
     return mouse_pos
 
@@ -200,6 +181,26 @@ class ContinueButton(pygame.sprite.Sprite):
         return button_x <= mouse_x <= button_x + button_width and \
             button_y <= mouse_y <= button_y + button_height
 
+
+class GoToMenu(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load(settings.go_to_menu_button)
+        self.rect = self.image.get_rect()
+        self.rect.x = settings.go_to_menu_button_rect_x
+        self.rect.y = settings.go_to_menu_button_rect_y
+
+    def check_button_pressed(self, position):
+        print('here', self.rect, position)
+        mouse_x = position[0]
+        mouse_y = position[1]
+        button_x = self.rect.x
+        button_y = self.rect.y
+        button_width = self.rect[2]
+        button_height = self.rect[3]
+        return button_x <= mouse_x <= button_x + button_width and \
+            button_y <= mouse_y <= button_y + button_height
+
 def draw_levels_chooise(screen, background, levels_objects):
     screen.blit(background, (0, 0))
     for each_level in levels_objects:
@@ -211,9 +212,10 @@ def draw_start_page(screen, background, button, logout_btn):
     screen.blit(button, (settings.start_button_rect_x, settings.start_button_rect_y))
     screen.blit(logout_btn, (settings.logout_button_rect_x, settings.logout_button_rect_y))
 
-def draw_pause_screen(screen, background, button):
+def draw_pause_screen(screen, background, play_button, go_to_menu_button):
     screen.blit(background, (0, 0))
-    screen.blit(button, (settings.continue_button_rect_x, settings.continue_button_rect_y))
+    screen.blit(play_button, (settings.continue_button_rect_x, settings.continue_button_rect_y))
+    screen.blit(go_to_menu_button, (settings.go_to_menu_button_rect_x, settings.go_to_menu_button_rect_y))
 
 def draw_menu_page(screen, background, button, logout_btn, points):
     screen.blit(background, (0, 0))

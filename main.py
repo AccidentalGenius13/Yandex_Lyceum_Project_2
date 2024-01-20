@@ -92,10 +92,19 @@ if __name__ == '__main__':
                 if event.type == pygame.MOUSEBUTTONUP:
                     moving = False
                     if mouse_pressed:
-                        #bird.flight(event.pos, screen)
                         mouse_pressed = False
                         flyght = True
                         for _ in range(3000):
+                            explosion_result = pig.explosion(bird)
+                            if explosion_result and existence:
+                                current_level_ui(screen)
+                            else:
+                                current_level_ui(screen, False)
+                                level_finish_time = pygame.time.get_ticks()
+                                time_for_level = level_finish_time - level_start_time
+                                existence = False
+                                current_screen = "menu"
+                                break
                             bird.rect.x += 0.5
                             screen.blit(background, (0, 0))
                             screen.blit(bird.image, bird.rect)
@@ -135,12 +144,14 @@ if __name__ == '__main__':
 
             if current_screen == 'pause':
                 continue_button = ui.ContinueButton()
-                ui.draw_pause_screen(screen, background, continue_button.image)
+                go_to_menu = ui.GoToMenu()
+                ui.draw_pause_screen(screen, background, continue_button.image, go_to_menu.image)
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                    if continue_button.check_button_pressed(event.pos):
-                       print('play')
                        current_screen = helper.ScreenNames.game
+                   if go_to_menu.check_button_pressed(event.pos):
+                       current_screen = "menu"
             if moving:
                 pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 10, bird.rect.y + 26],
                                  [settings.slingshot_rect_x + 20, settings.slingshot_rect_y + 28], 3)

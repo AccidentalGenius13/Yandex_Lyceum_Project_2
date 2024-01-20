@@ -1,4 +1,5 @@
 import pygame
+import numpy
 
 class ScreenNames:
     choose_level = 'choose level'
@@ -27,4 +28,10 @@ def print_points(points, screen):
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
     text_surface = my_font.render(f'Заработано {points} очков', False, (0, 0, 0))
     screen.blit(text_surface, (600, 100))
+
+def get_line_formula(first, second):
+    m_1 = numpy.array([[float(first[0]), 1.], [float(second[0]), 1.]])
+    v_1 = numpy.array([float(first[1]), float(second[1])])
+    res = numpy.linalg.solve(m_1, v_1)
+    return res[0], res[1]
 

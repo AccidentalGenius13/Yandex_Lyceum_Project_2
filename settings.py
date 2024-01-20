@@ -55,5 +55,9 @@ next_level_button_rect_y = 200
 
 
 continue_button = 'images/play_button.jpg'
-continue_button_rect_x = 300
+continue_button_rect_x = 100
 continue_button_rect_y = 40
+
+go_to_menu_button = "images/go_to_menu.png"
+go_to_menu_button_rect_x = 120
+go_to_menu_button_rect_y = 200

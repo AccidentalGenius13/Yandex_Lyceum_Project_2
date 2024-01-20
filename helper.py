@@ -5,6 +5,7 @@ class ScreenNames:
     choose_level = 'choose level'
     pause = "pause"
     game = "game"
+    gameover = "gameover"
 
 
 def get_distance(first, second):

@@ -43,7 +43,7 @@ levels_space = 30
 
 image_width = 92
 
-levels_acessibility = [1, 0, 0, 0, 0]
+levels_acessibility = [1, 0, 0]
 
 pause_button = "images/pause_button.png"
 pause_button_rect_x = 40
@@ -53,7 +53,6 @@ next_level_button = "images/next_level.png"
 next_level_button_rect_x = 700
 next_level_button_rect_y = 200
 
-
 continue_button = 'images/play_button.jpg'
 continue_button_rect_x = 300
 continue_button_rect_y = 40
@@ -61,3 +60,7 @@ continue_button_rect_y = 40
 go_to_menu_button = "images/go_to_menu.png"
 go_to_menu_button_rect_x = 320
 go_to_menu_button_rect_y = 200
+
+start_over_button = "images/start_over.png"
+start_over_button_rect_x = 720
+start_over_button_rect_y = 40

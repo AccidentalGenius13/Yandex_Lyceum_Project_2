@@ -45,10 +45,10 @@ if __name__ == '__main__':
                 logout_button = ui.LogoutButton(x=settings.logout_button_rect_x + 650,
                                                  y=settings.logout_button_rect_y + 300)
                 background = pygame.image.load(settings.choose_level_bg)
-                levels_objects = [level_button(i) for i in range(1, 6)]
+                levels_objects = [level_button(i) for i in range(1, 4)]
                 ui.draw_levels_chooise(screen, background, levels_objects, logout_button.image)
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    level_pressed = [levels_objects[i].check_level_button_pressed(event.pos) for i in range(5)]
+                    level_pressed = [levels_objects[i].check_level_button_pressed(event.pos) for i in range(3)]
                     if True in level_pressed:
                         level_number = level_pressed.index(True)
                         if settings.levels_acessibility[level_number] == 1:
@@ -72,12 +72,10 @@ if __name__ == '__main__':
                     current_level_ui = levels.level_2
                 if level_number + 1 == 3:
                     current_level_ui = levels.level_3
-                if level_number + 1 == 4:
-                    current_level_ui = levels.level_4
-                if level_number + 1 == 5:
-                    current_level_ui = levels.level_5
 
                 pause_button = ui.PauseButton()
+
+                pig = current_level_ui(screen, existence)
 
                 current_level_ui(screen, existence)
 
@@ -94,25 +92,30 @@ if __name__ == '__main__':
                     if mouse_pressed:
                         mouse_pressed = False
                         flyght = True
-                        k, b = helper.get_line_formula((bird.rect.x, bird.rect.y), (settings.bird_rect_x, settings.bird_rect_y))
-                        for _ in range(3000):
-                            explosion_result = pig.explosion(bird)
-                            if explosion_result and existence:
-                                current_level_ui(screen)
-                            else:
-                                current_level_ui(screen, False)
-                                level_finish_time = pygame.time.get_ticks()
-                                time_for_level = level_finish_time - level_start_time
-                                existence = False
-                                current_screen = "menu"
-                                break
-                            bird.rect.x += 0.5
-                            bird.rect.y = k * bird.rect.x + b
+                        if (bird.rect.x, bird.rect.y) != (settings.bird_rect_x, settings.bird_rect_y):
+                            k, b = helper.get_line_formula((bird.rect.x, bird.rect.y), (settings.bird_rect_x, settings.bird_rect_y))
+                            for _ in range(2000):
+                                if bird.out_of_screen():
+                                    flyght = False
+                                    current_screen = helper.ScreenNames.gameover
+                                    break
+                                explosion_result = pig.explosion(bird)
+                                if explosion_result and existence:
+                                    current_level_ui(screen)
+                                else:
+                                    current_level_ui(screen, False)
+                                    level_finish_time = pygame.time.get_ticks()
+                                    time_for_level = level_finish_time - level_start_time
+                                    existence = False
+                                    current_screen = "menu"
+                                    break
+                                bird.rect.x += 2
+                                bird.rect.y = k * bird.rect.x + b
 
-                            screen.blit(background, (0, 0))
-                            screen.blit(bird.image, bird.rect)
-                            current_level_ui(screen)
-                            pygame.display.flip()
+                                screen.blit(background, (0, 0))
+                                screen.blit(bird.image, bird.rect)
+                                current_level_ui(screen)
+                                pygame.display.flip()
 
 
                 if event.type == pygame.MOUSEMOTION and moving:
@@ -144,6 +147,17 @@ if __name__ == '__main__':
                         current_screen = helper.ScreenNames.choose_level
                         print(level_number)
                         settings.levels_acessibility[level_number + 1] = 1
+
+            if current_screen == 'gameover':
+                start_over_button = ui.StartOver()
+                go_to_menu_button = ui.GoToMenu(settings.go_to_menu_button_rect_x + 400, settings.go_to_menu_button_rect_y)
+                background = pygame.image.load(settings.choose_level_bg)
+                ui.draw_gameover_page(screen, background, start_over_button.image, go_to_menu_button.image)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if start_over_button.check_button_pressed(event.pos):
+                        current_screen = helper.ScreenNames.game
+                    if go_to_menu_button.check_button_pressed(event.pos):
+                        current_screen = helper.ScreenNames.choose_level
 
             if current_screen == 'pause':
                 continue_button = ui.ContinueButton()

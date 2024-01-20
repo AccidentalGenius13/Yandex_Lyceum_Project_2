@@ -1,7 +1,5 @@
 import pygame
 import helper
-
-import levels
 import settings
 
 
@@ -13,6 +11,14 @@ class Bird(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = settings.bird_rect_x
         self.rect.y = settings.bird_rect_y
+
+    def out_of_screen(self):
+        if self.rect.x < 0 or self.rect.x > settings.width:
+            return True
+        if self.rect.y < 0 or self.rect.y > settings.height:
+            return True
+        return False
+
 
 class Pig(pygame.sprite.Sprite):
     def __init__(self, x=settings.pig_rect_x, y=settings.pig_rect_y):
@@ -196,14 +202,33 @@ class ContinueButton(pygame.sprite.Sprite):
         return button_x <= mouse_x <= button_x + button_width and \
             button_y <= mouse_y <= button_y + button_height
 
+class StartOver(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load(settings.start_over_button)
+        self.rect = self.image.get_rect()
+        self.rect.x = settings.start_over_button_rect_x
+        self.rect.y = settings.start_over_button_rect_y
+
+    def check_button_pressed(self, position):
+        print('here', self.rect, position)
+        mouse_x = position[0]
+        mouse_y = position[1]
+        button_x = self.rect.x
+        button_y = self.rect.y
+        button_width = self.rect[2]
+        button_height = self.rect[3]
+        return button_x <= mouse_x <= button_x + button_width and \
+            button_y <= mouse_y <= button_y + button_height
+
 
 class GoToMenu(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, x=settings.logout_button_rect_x, y=settings.logout_button_rect_y):
         super().__init__()
         self.image = pygame.image.load(settings.go_to_menu_button)
         self.rect = self.image.get_rect()
-        self.rect.x = settings.go_to_menu_button_rect_x
-        self.rect.y = settings.go_to_menu_button_rect_y
+        self.rect.x = x
+        self.rect.y = y
 
     def check_button_pressed(self, position):
         print('here', self.rect, position)
@@ -238,3 +263,8 @@ def draw_menu_page(screen, background, button, logout_btn, points):
     screen.blit(button, (settings.next_level_button_rect_x, settings.next_level_button_rect_y))
     screen.blit(logout_btn, (settings.logout_button_rect_x + 650, settings.logout_button_rect_y + 300))
     helper.print_points(round(1 / points * 1000000), screen)
+
+def draw_gameover_page(screen, background, start_over, go_to_menu):
+    screen.blit(background, (0, 0))
+    screen.blit(start_over, (settings.start_over_button_rect_x, settings.start_over_button_rect_y))
+    screen.blit(go_to_menu, (settings.go_to_menu_button_rect_x + 400, settings.go_to_menu_button_rect_y))

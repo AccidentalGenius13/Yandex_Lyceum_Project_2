@@ -42,9 +42,11 @@ if __name__ == '__main__':
 
             if current_screen == 'choose level':
                 level_button = ui.LevelButton
+                logout_button = ui.LogoutButton(x=settings.logout_button_rect_x + 650,
+                                                 y=settings.logout_button_rect_y + 300)
                 background = pygame.image.load(settings.choose_level_bg)
                 levels_objects = [level_button(i) for i in range(1, 6)]
-                ui.draw_levels_chooise(screen, background, levels_objects)
+                ui.draw_levels_chooise(screen, background, levels_objects, logout_button.image)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     level_pressed = [levels_objects[i].check_level_button_pressed(event.pos) for i in range(5)]
                     if True in level_pressed:
@@ -56,6 +58,8 @@ if __name__ == '__main__':
                             mouse_pressed = False
                             existence = True
                             level_start_time = pygame.time.get_ticks()
+                    if logout_button.check_logout_button_pressed(event.pos):
+                        running = False
 
             if current_screen == helper.ScreenNames.game:
                 background = pygame.image.load(settings.bg)
@@ -68,7 +72,6 @@ if __name__ == '__main__':
                     current_level_ui = levels.level_2
                 if level_number + 1 == 3:
                     current_level_ui = levels.level_3
-                    pig = ui.Pig(x=settings.pig_rect_x, y=settings.pig_rect_y - 200)
                 if level_number + 1 == 4:
                     current_level_ui = levels.level_4
                 if level_number + 1 == 5:

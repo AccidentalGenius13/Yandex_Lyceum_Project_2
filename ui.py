@@ -216,10 +216,11 @@ class GoToMenu(pygame.sprite.Sprite):
         return button_x <= mouse_x <= button_x + button_width and \
             button_y <= mouse_y <= button_y + button_height
 
-def draw_levels_chooise(screen, background, levels_objects):
+def draw_levels_chooise(screen, background, levels_objects, logout_btn):
     screen.blit(background, (0, 0))
     for each_level in levels_objects:
         screen.blit(each_level.image, (each_level.rect.x, each_level.rect.y))
+    screen.blit(logout_btn, (settings.logout_button_rect_x + 650, settings.logout_button_rect_y + 300))
 
 
 def draw_start_page(screen, background, button, logout_btn):

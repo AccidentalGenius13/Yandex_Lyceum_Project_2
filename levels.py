@@ -24,8 +24,8 @@ def level_1(screen, draw_pig=True):
 
 
 def level_2(screen, draw_pig=True):
-    pig = ui.Pig(x=settings.pig_rect_x,
-                        y=settings.pig_rect_y - 150)
+    pig = ui.Pig(x=settings.pig_rect_x - 10,
+                        y=settings.pig_rect_y - 160)
     pause_button = ui.PauseButton()
     column_vertical = ui.ColumnVertical()
     column_horizontal = ui.ColumnHorizontal()
@@ -42,11 +42,11 @@ def level_2(screen, draw_pig=True):
     screen.blit(pause_button.image, (settings.pause_button_rect_x, settings.pause_button_rect_y))
 
     if draw_pig:
-        screen.blit(pig.image, (settings.pig_rect_x, settings.pig_rect_y - 160))
+        screen.blit(pig.image, (settings.pig_rect_x - 10, settings.pig_rect_y - 160))
     return pig
 
 def level_3(screen, draw_pig=True):
-    pig = ui.Pig(x=settings.pig_rect_x,
+    pig = ui.Pig(x=settings.pig_rect_x - 5,
                         y=settings.pig_rect_y - 350)
     pause_button = ui.PauseButton()
     column_vertical = ui.ColumnVertical()
@@ -67,6 +67,6 @@ def level_3(screen, draw_pig=True):
     screen.blit(pause_button.image, (settings.pause_button_rect_x, settings.pause_button_rect_y))
 
     if draw_pig:
-        screen.blit(pig.image, (settings.pig_rect_x, settings.pig_rect_y - 350))
+        screen.blit(pig.image, (settings.pig_rect_x - 5, settings.pig_rect_y - 350))
     return pig
 

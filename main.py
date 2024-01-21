@@ -12,6 +12,7 @@ if __name__ == '__main__':
     bird = ui.Bird()
     pig = ui.Pig()
 
+    first = True
     victory = False
     ground = False
     flyght = False
@@ -99,6 +100,8 @@ if __name__ == '__main__':
                         flyght = True
                         if (bird.rect.x, bird.rect.y) != (settings.bird_rect_x, settings.bird_rect_y):
                             k, b = helper.get_line_formula((bird.rect.x, bird.rect.y), (settings.bird_rect_x, settings.bird_rect_y))
+                            first = True
+                            step = 0
                             for _ in range(2000):
                                 if bird.out_of_screen():
                                     flyght = False
@@ -114,7 +117,14 @@ if __name__ == '__main__':
                                     existence = False
                                     current_screen = "menu"
                                     break
-                                bird.rect.x += 2
+
+                                if first:
+                                    if helper.get_distance((bird.rect.x, bird.rect.y), (settings.bird_rect_x, settings.bird_rect_y)) > 95:
+                                        step = 2
+                                    else:
+                                        step = 1
+                                bird.rect.x += step
+                                first = False
                                 bird.rect.y = k * bird.rect.x + b
 
                                 screen.blit(background, (0, 0))
@@ -144,7 +154,9 @@ if __name__ == '__main__':
                     y=settings.logout_button_rect_y + 300
                 )
                 background = pygame.image.load(settings.choose_level_bg)
-                ui.draw_menu_page(screen, background, next_level_button.image, logout_button.image, time_for_level)
+                points = helper.get_points_by_time(time_for_level)
+                settings.levels_points[level_number] = points
+                ui.draw_menu_page(screen, background, next_level_button.image, logout_button.image, points)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if logout_button.check_logout_button_pressed(event.pos):
                         running = False

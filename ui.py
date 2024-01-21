@@ -15,7 +15,7 @@ class Bird(pygame.sprite.Sprite):
     def out_of_screen(self):
         if self.rect.x < 0 or self.rect.x > settings.width:
             return True
-        if self.rect.y < 0 or self.rect.y > settings.height:
+        if self.rect.y < 0 or self.rect.y > settings.height - 150:
             return True
         return False
 
@@ -257,7 +257,7 @@ def draw_menu_page(screen, background, button, logout_btn, points):
     screen.blit(background, (0, 0))
     screen.blit(button, (settings.next_level_button_rect_x, settings.next_level_button_rect_y))
     screen.blit(logout_btn, (settings.logout_button_rect_x + 650, settings.logout_button_rect_y + 300))
-    helper.print_points(round(1 / points * 1000000), screen)
+    helper.print_points(points, screen)
 
 def draw_gameover_page(screen, background, start_over, go_to_menu):
     screen.blit(background, (0, 0))

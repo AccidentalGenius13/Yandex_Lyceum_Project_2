@@ -1,5 +1,6 @@
 import pygame
 import numpy
+import settings
 
 class ScreenNames:
     choose_level = 'choose level'
@@ -13,18 +14,6 @@ def get_distance(first, second):
     return ((first[0] - second[0]) ** 2 + (first[1] - second[1]) ** 2) ** 0.5
 
 
-def get_angle_trigonometry(first, second):
-    x = abs(second[0] - first[0])
-    y = abs(second[1] - first[1])
-    gip = get_distance(first, second)
-    trigonometry = {
-        'sin': y / gip,
-        'cos': x / gip,
-        'tg': y / x,
-        'ctg': x / y
-    }
-    return trigonometry
-
 all_points = 0
 def print_points(points, screen):
     global all_points
@@ -36,8 +25,11 @@ def print_points(points, screen):
 def print_all_points(screen):
     global all_points
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
-    text_surface = my_font.render(f'За всю игру заработано {all_points} очков', False, (0, 0, 0))
-    screen.blit(text_surface, (520, 400))
+    text_surface = my_font.render(f'За всю игру заработано {sum(settings.levels_points)} очков', False, (0, 0, 0))
+    screen.blit(text_surface, (520, 300))
+
+def get_points_by_time(time):
+    return round(1 / time * 1000000)
 
 def get_line_formula(first, second):
     m_1 = numpy.array([[float(first[0]), 1.], [float(second[0]), 1.]])

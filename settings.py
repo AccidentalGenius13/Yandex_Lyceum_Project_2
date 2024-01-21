@@ -44,6 +44,7 @@ levels_space = 30
 image_width = 92
 
 levels_acessibility = [1, 0, 0, 0]
+levels_points = [0, 0, 0]
 
 pause_button = "images/pause_button.png"
 pause_button_rect_x = 40
@@ -66,5 +67,5 @@ start_over_button_rect_x = 720
 start_over_button_rect_y = 40
 
 victory = "images/victory.png"
-victory_rect_x = 620
+victory_rect_x = 580
 victory_rect_y = 40

@@ -149,7 +149,6 @@ if __name__ == '__main__':
                         running = False
                     if next_level_button.check_next_level_button_pressed(event.pos):
                         current_screen = helper.ScreenNames.choose_level
-                        print(level_number)
                         settings.levels_acessibility[level_number + 1] = 1
 
             if current_screen == "gameover":

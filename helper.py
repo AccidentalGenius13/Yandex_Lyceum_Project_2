@@ -25,11 +25,19 @@ def get_angle_trigonometry(first, second):
     }
     return trigonometry
 
-
+all_points = 0
 def print_points(points, screen):
+    global all_points
     my_font = pygame.font.SysFont('Comic Sans MS', 30)
     text_surface = my_font.render(f'Заработано {points} очков', False, (0, 0, 0))
+    all_points += points
     screen.blit(text_surface, (600, 100))
+
+def print_all_points(screen):
+    global all_points
+    my_font = pygame.font.SysFont('Comic Sans MS', 30)
+    text_surface = my_font.render(f'За всю игру заработано {all_points} очков', False, (0, 0, 0))
+    screen.blit(text_surface, (500, 400))
 
 def get_line_formula(first, second):
     m_1 = numpy.array([[float(first[0]), 1.], [float(second[0]), 1.]])

@@ -40,7 +40,6 @@ class Pig(pygame.sprite.Sprite):
 
 
 def bird_check_pos(bird, position):
-    print(bird.rect, position)
     x = bird.rect[0]
     y = bird.rect[1]
     bird_width = bird.rect[2]
@@ -173,7 +172,6 @@ class NextLevel(pygame.sprite.Sprite):
         self.rect.y = settings.next_level_button_rect_y
 
     def check_next_level_button_pressed(self, position):
-        print(self.rect, position)
         mouse_x = position[0]
         mouse_y = position[1]
         button_x = self.rect.x
@@ -192,7 +190,6 @@ class ContinueButton(pygame.sprite.Sprite):
         self.rect.y = settings.continue_button_rect_y
 
     def check_button_pressed(self, position):
-        print('here', self.rect, position)
         mouse_x = position[0]
         mouse_y = position[1]
         button_x = self.rect.x
@@ -211,7 +208,6 @@ class StartOver(pygame.sprite.Sprite):
         self.rect.y = settings.start_over_button_rect_y
 
     def check_button_pressed(self, position):
-        print('here', self.rect, position)
         mouse_x = position[0]
         mouse_y = position[1]
         button_x = self.rect.x
@@ -231,7 +227,6 @@ class GoToMenu(pygame.sprite.Sprite):
         self.rect.y = y
 
     def check_button_pressed(self, position):
-        print('here', self.rect, position)
         mouse_x = position[0]
         mouse_y = position[1]
         button_x = self.rect.x
@@ -273,3 +268,4 @@ def draw_victory_page(screen, background, logout_button, victory):
     screen.blit(background, (0, 0))
     screen.blit(logout_button, (settings.logout_button_rect_x + 650, settings.logout_button_rect_y + 300))
     screen.blit(victory, (settings.victory_rect_x, settings.victory_rect_y))
+    helper.print_all_points(screen)

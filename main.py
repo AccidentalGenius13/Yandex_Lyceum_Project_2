@@ -47,6 +47,10 @@ if __name__ == '__main__':
                                                  y=settings.logout_button_rect_y + 300)
                 background = pygame.image.load(settings.choose_level_bg)
                 levels_objects = [level_button(i) for i in range(1, 4)]
+                if settings.levels_acessibility[3] == 1:
+                    victory = True
+                if victory:
+                    current_screen = "victory"
                 ui.draw_levels_chooise(screen, background, levels_objects, logout_button.image)
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     level_pressed = [levels_objects[i].check_level_button_pressed(event.pos) for i in range(3)]
@@ -73,9 +77,6 @@ if __name__ == '__main__':
                     current_level_ui = levels.level_2
                 if level_number + 1 == 3:
                     current_level_ui = levels.level_3
-                    victory = True
-                if victory:
-                    current_screen = "victory"
 
                 pause_button = ui.PauseButton()
 

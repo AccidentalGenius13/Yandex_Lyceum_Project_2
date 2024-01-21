@@ -47,7 +47,7 @@ def level_2(screen, draw_pig=True):
 
 def level_3(screen, draw_pig=True):
     pig = ui.Pig(x=settings.pig_rect_x,
-                        y=settings.pig_rect_y - 300)
+                        y=settings.pig_rect_y - 350)
     pause_button = ui.PauseButton()
     column_vertical = ui.ColumnVertical()
     column_horizontal = ui.ColumnHorizontal()

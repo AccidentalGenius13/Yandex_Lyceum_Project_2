@@ -43,7 +43,7 @@ levels_space = 30
 
 image_width = 92
 
-levels_acessibility = [1, 0, 0]
+levels_acessibility = [1, 0, 0, 0]
 
 pause_button = "images/pause_button.png"
 pause_button_rect_x = 40

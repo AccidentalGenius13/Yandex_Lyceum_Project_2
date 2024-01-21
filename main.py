@@ -24,10 +24,8 @@ if __name__ == '__main__':
     current_screen = 'Start page'
     while running:
         for event in pygame.event.get():
-
             if event.type == pygame.QUIT:
                 running = False
-
 
             if current_screen == 'Start page':
                 start_button = ui.StartButton()
@@ -45,7 +43,7 @@ if __name__ == '__main__':
             if current_screen == 'choose level':
                 level_button = ui.LevelButton
                 logout_button = ui.LogoutButton(x=settings.logout_button_rect_x + 650,
-                                                 y=settings.logout_button_rect_y + 300)
+                                                y=settings.logout_button_rect_y + 300)
                 background = pygame.image.load(settings.choose_level_bg)
                 levels_objects = [level_button(i) for i in range(1, 4)]
                 if settings.levels_acessibility[3] == 1:
@@ -87,7 +85,7 @@ if __name__ == '__main__':
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pause_button.check_pause_button_pressed(event.pos):
-                       current_screen = helper.ScreenNames.pause
+                        current_screen = helper.ScreenNames.pause
 
                     if ui.bird_check_pos(bird, event.pos):
                         moving = True
@@ -99,7 +97,8 @@ if __name__ == '__main__':
                         mouse_pressed = False
                         flyght = True
                         if (bird.rect.x, bird.rect.y) != (settings.bird_rect_x, settings.bird_rect_y):
-                            k, b = helper.get_line_formula((bird.rect.x, bird.rect.y), (settings.bird_rect_x, settings.bird_rect_y))
+                            k, b = helper.get_line_formula((bird.rect.x, bird.rect.y),
+                                                           (settings.bird_rect_x, settings.bird_rect_y))
                             first = True
                             step = 0
                             for _ in range(2000):
@@ -119,7 +118,8 @@ if __name__ == '__main__':
                                     break
 
                                 if first:
-                                    if helper.get_distance((bird.rect.x, bird.rect.y), (settings.bird_rect_x, settings.bird_rect_y)) > 95:
+                                    if helper.get_distance((bird.rect.x, bird.rect.y),
+                                                           (settings.bird_rect_x, settings.bird_rect_y)) > 95:
                                         step = 2
                                     else:
                                         step = 1
@@ -131,7 +131,6 @@ if __name__ == '__main__':
                                 screen.blit(bird.image, bird.rect)
                                 current_level_ui(screen)
                                 pygame.display.flip()
-
 
                 if event.type == pygame.MOUSEMOTION and moving:
                     bird.rect.center = ui.bird_pulling(event.pos, bird)
@@ -166,7 +165,8 @@ if __name__ == '__main__':
 
             if current_screen == "gameover":
                 start_over_button = ui.StartOver()
-                go_to_menu_button = ui.GoToMenu(settings.go_to_menu_button_rect_x + 400, settings.go_to_menu_button_rect_y)
+                go_to_menu_button = ui.GoToMenu(settings.go_to_menu_button_rect_x + 400,
+                                                settings.go_to_menu_button_rect_y)
                 background = pygame.image.load(settings.choose_level_bg)
                 ui.draw_gameover_page(screen, background, start_over_button.image, go_to_menu_button.image)
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -194,10 +194,11 @@ if __name__ == '__main__':
                 go_to_menu = ui.GoToMenu(x=settings.go_to_menu_button_rect_x, y=settings.go_to_menu_button_rect_y)
                 ui.draw_pause_screen(screen, background, continue_button.image, go_to_menu.image)
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                   if continue_button.check_button_pressed(event.pos):
-                       current_screen = helper.ScreenNames.game
-                   if go_to_menu.check_button_pressed(event.pos):
-                       current_screen = "choose level"
+                    if continue_button.check_button_pressed(event.pos):
+                        current_screen = helper.ScreenNames.game
+                    if go_to_menu.check_button_pressed(event.pos):
+                        current_screen = "choose level"
+
             if moving:
                 pygame.draw.line(screen, (0, 0, 0), [bird.rect.x + 10, bird.rect.y + 26],
                                  [settings.slingshot_rect_x + 20, settings.slingshot_rect_y + 28], 3)
@@ -206,4 +207,3 @@ if __name__ == '__main__':
 
         pygame.display.flip()
     pygame.quit()
-    

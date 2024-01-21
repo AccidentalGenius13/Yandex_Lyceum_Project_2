@@ -3,7 +3,6 @@ import helper
 import settings
 
 
-
 class Bird(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -38,7 +37,6 @@ class Pig(pygame.sprite.Sprite):
             return True
 
 
-
 def bird_check_pos(bird, position):
     x = bird.rect[0]
     y = bird.rect[1]
@@ -70,6 +68,7 @@ def bird_pulling(mouse_pos, bird):
     bird.rect.center = mouse_pos
     return mouse_pos
 
+
 class ColumnVertical(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -78,6 +77,7 @@ class ColumnVertical(pygame.sprite.Sprite):
         self.rect.x = settings.column_vertical_rect_x
         self.rect.y = settings.column_vertical_rect_y
 
+
 class ColumnHorizontal(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -85,6 +85,7 @@ class ColumnHorizontal(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = settings.column_horizontal_rect_x
         self.rect.y = settings.column_horizontal_rect_y
+
 
 class StartButton(pygame.sprite.Sprite):
     def __init__(self):
@@ -103,6 +104,7 @@ class StartButton(pygame.sprite.Sprite):
         button_height = self.rect[3]
         return button_x <= mouse_x <= button_x + button_width and \
             button_y <= mouse_y <= button_y + button_height
+
 
 class LogoutButton(pygame.sprite.Sprite):
     def __init__(self, x=settings.logout_button_rect_x, y=settings.logout_button_rect_y):
@@ -163,6 +165,7 @@ class PauseButton(pygame.sprite.Sprite):
         return button_x <= mouse_x <= button_x + button_width and \
             button_y <= mouse_y <= button_y + button_height
 
+
 class NextLevel(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -181,6 +184,7 @@ class NextLevel(pygame.sprite.Sprite):
         return button_x <= mouse_x <= button_x + button_width and \
             button_y <= mouse_y <= button_y + button_height
 
+
 class ContinueButton(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -198,6 +202,7 @@ class ContinueButton(pygame.sprite.Sprite):
         button_height = self.rect[3]
         return button_x <= mouse_x <= button_x + button_width and \
             button_y <= mouse_y <= button_y + button_height
+
 
 class StartOver(pygame.sprite.Sprite):
     def __init__(self):
@@ -236,6 +241,7 @@ class GoToMenu(pygame.sprite.Sprite):
         return button_x <= mouse_x <= button_x + button_width and \
             button_y <= mouse_y <= button_y + button_height
 
+
 def draw_levels_chooise(screen, background, levels_objects, logout_btn):
     screen.blit(background, (0, 0))
     for each_level in levels_objects:
@@ -248,10 +254,12 @@ def draw_start_page(screen, background, button, logout_btn):
     screen.blit(button, (settings.start_button_rect_x, settings.start_button_rect_y))
     screen.blit(logout_btn, (settings.logout_button_rect_x, settings.logout_button_rect_y))
 
+
 def draw_pause_screen(screen, background, play_button, go_to_menu_button):
     screen.blit(background, (0, 0))
     screen.blit(play_button, (settings.continue_button_rect_x, settings.continue_button_rect_y))
     screen.blit(go_to_menu_button, (settings.go_to_menu_button_rect_x, settings.go_to_menu_button_rect_y))
+
 
 def draw_menu_page(screen, background, button, logout_btn, points):
     screen.blit(background, (0, 0))
@@ -259,10 +267,12 @@ def draw_menu_page(screen, background, button, logout_btn, points):
     screen.blit(logout_btn, (settings.logout_button_rect_x + 650, settings.logout_button_rect_y + 300))
     helper.print_points(points, screen)
 
+
 def draw_gameover_page(screen, background, start_over, go_to_menu):
     screen.blit(background, (0, 0))
     screen.blit(start_over, (settings.start_over_button_rect_x, settings.start_over_button_rect_y))
     screen.blit(go_to_menu, (settings.go_to_menu_button_rect_x + 400, settings.go_to_menu_button_rect_y))
+
 
 def draw_victory_page(screen, background, logout_button, victory):
     screen.blit(background, (0, 0))

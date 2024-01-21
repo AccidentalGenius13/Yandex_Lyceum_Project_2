@@ -191,9 +191,8 @@ if __name__ == '__main__':
 
             if current_screen == 'pause':
                 continue_button = ui.ContinueButton()
-                go_to_menu = ui.GoToMenu()
+                go_to_menu = ui.GoToMenu(x=settings.go_to_menu_button_rect_x, y=settings.go_to_menu_button_rect_y)
                 ui.draw_pause_screen(screen, background, continue_button.image, go_to_menu.image)
-
                 if event.type == pygame.MOUSEBUTTONDOWN:
                    if continue_button.check_button_pressed(event.pos):
                        current_screen = helper.ScreenNames.game
@@ -207,3 +206,4 @@ if __name__ == '__main__':
 
         pygame.display.flip()
     pygame.quit()
+    
